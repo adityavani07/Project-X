@@ -4,19 +4,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import WorkScene from './scenes/WorkScene';
 import emailjs from '@emailjs/browser';
 import BackgroundScene from './scenes/BackgroundScene';
-import HeroScene from './scenes/HeroScene';
-import AboutScene from './scenes/AboutScene';
-import ServiceScene from './scenes/ServiceScene';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const bg = new BackgroundScene('bg-canvas');
-new HeroScene('hero-canvas');
-new AboutScene('about-canvas');
-
-document.querySelectorAll('.service-card').forEach(card => {
-  new ServiceScene(card);
-});
 
 // ============================================
 // GLOBAL STATE & UTILS

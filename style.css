@@ -283,7 +283,7 @@ a, button, input, textarea, .hoverable { cursor: none; }
   font-size: 0.85rem;
   font-weight: 400;
   letter-spacing: 0.4em;
-  color: var(--grey);
+  color: var(--white);
   text-transform: uppercase;
   margin-bottom: 15px;
   opacity: 0;
