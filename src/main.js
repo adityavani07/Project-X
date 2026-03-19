@@ -3,9 +3,11 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import WorkScene from './scenes/WorkScene';
 import emailjs from '@emailjs/browser';
+import BackgroundScene from './scenes/BackgroundScene';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const bg = new BackgroundScene('bg-canvas');
 // ============================================
 // GLOBAL STATE & UTILS
 // ============================================

@@ -22,6 +22,19 @@ body {
   cursor: none;
 }
 
+/* ============================================
+   GLOBAL BACKGROUND SCENE
+   ============================================ */
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10; /* Keeps it behind all your sections */
+  pointer-events: none; /* Crucial: allows clicks to pass through to your buttons */
+}
+
 a { color: inherit; text-decoration: none; }
 button { cursor: none; }
 input, textarea { cursor: none; }
