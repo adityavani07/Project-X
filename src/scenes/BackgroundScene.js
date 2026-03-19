@@ -61,6 +61,31 @@ export default class BackgroundScene {
     });
   }
 
+  setVelocity(velocity) {
+    // We divide by a large number so the math doesn't make it spin out of control
+    this.scrollVelocity = velocity * 0.0005; 
+  }
+
+  animate = () => {
+    // 1. Initialize velocity if it doesn't exist
+    if (!this.scrollVelocity) this.scrollVelocity = 0;
+
+    // 2. Add the scroll velocity to the base rotation
+    // Math.abs ensures it always spins forward, whether scrolling up or down
+    this.particlesMesh.rotation.y += 0.0003 + Math.abs(this.scrollVelocity);
+    this.particlesMesh.rotation.x += 0.0001 + (this.scrollVelocity * 0.5);
+
+    // 3. Smooth mouse parallax
+    this.particlesMesh.position.x += (this.mouseX * 0.5 - this.particlesMesh.position.x) * 0.05;
+    this.particlesMesh.position.y += (-this.mouseY * 0.5 - this.particlesMesh.position.y) * 0.05;
+
+    // 4. Dampen the velocity (friction) so it smoothly slows down when scrolling stops
+    this.scrollVelocity *= 0.9;
+
+    this.renderer.render(this.scene, this.camera);
+    requestAnimationFrame(this.animate);
+  }
+
   animate = () => {
     // 1. Base constant slow rotation
     this.particlesMesh.rotation.y += 0.0003;

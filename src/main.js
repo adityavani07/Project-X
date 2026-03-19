@@ -4,10 +4,20 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import WorkScene from './scenes/WorkScene';
 import emailjs from '@emailjs/browser';
 import BackgroundScene from './scenes/BackgroundScene';
+import HeroScene from './scenes/HeroScene';
+import AboutScene from './scenes/AboutScene';
+import ServiceScene from './scenes/ServiceScene';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const bg = new BackgroundScene('bg-canvas');
+new HeroScene('hero-canvas');
+new AboutScene('about-canvas');
+
+document.querySelectorAll('.service-card').forEach(card => {
+  new ServiceScene(card);
+});
+
 // ============================================
 // GLOBAL STATE & UTILS
 // ============================================
@@ -312,6 +322,18 @@ function initScrollAnimations() {
       onEnter: () => gsap.to(el, { innerText: target, duration: 2, snap: { innerText: 1 }, ease: 'power2.out' })
     });
   });
+  
+  ScrollTrigger.create({
+  trigger: document.body,
+  start: 'top top',
+  end: 'bottom bottom',
+  onUpdate: (self) => {
+    // self.getVelocity() grabs the exact pixel-per-second scroll speed
+    if (bg) {
+      bg.setVelocity(self.getVelocity());
+    }
+  }
+});
   
   // Interactive tilts
   document.querySelectorAll('.service-card, .work-card').forEach(card => {

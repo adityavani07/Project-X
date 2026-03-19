@@ -301,9 +301,9 @@ a, button, input, textarea, .hoverable { cursor: none; }
 .hero-subtitle {
   font-size: clamp(0.8rem, 1.5vw, 1rem);
   font-weight: 300;
-  color: var(--grey);
+  color: var(--white);
   letter-spacing: 0.15em;
-  opacity: 0;
+  opacity: 100;
 }
 
 .scroll-indicator {
