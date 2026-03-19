@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PROJECT X — 3D Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <div id="preloader">
+      <canvas id="preloader-canvas"></canvas>
+      <div class="preloader-text" id="preloaderText">
+        <span>P</span><span>R</span><span>O</span><span>J</span><span>E</span
+        ><span>C</span><span>T</span>
+        <span style="width: 20px"></span>
+        <span>X</span>
+      </div>
+      <div class="preloader-progress">
+        <span id="preloaderPercent">0</span>%
+      </div>
+    </div>
+
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#work" class="nav-close">Work</a>
+      <a href="#services" class="nav-close">Services</a>
+      <a href="#team" class="nav-close">Team</a>
+      <a href="#contact" class="nav-close">Contact</a>
+    </div>
+
+    <nav id="navbar">
+      <a href="#hero" class="nav-logo hoverable">PROJECT X</a>
+      <ul class="nav-links">
+        <li><a href="#work" class="hoverable">Work</a></li>
+        <li><a href="#services" class="hoverable">Services</a></li>
+        <li><a href="#team" class="hoverable">Team</a></li>
+        <li><a href="#contact" class="hoverable">Contact</a></li>
+      </ul>
+      <button class="hamburger hoverable" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <section id="hero">
+      <canvas id="hero-canvas"></canvas>
+      <div class="hero-content">
+        <p class="hero-label">WE ARE</p>
+        <h1 class="hero-title">PROJECT X</h1>
+        <p class="hero-subtitle">
+          3D Animations &bull; Interactive Experiences &bull; Digital Craft
+        </p>
+      </div>
+      <div class="scroll-indicator">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="about-wrapper">
+        <div class="about-text">
+          <h2 class="reveal-up">We Build<br />Dimensions</h2>
+          <p class="reveal-up">
+            At Project X, we transform bold ideas into immersive 3D digital
+            experiences that captivate audiences and elevate brands beyond the
+            ordinary.
+          </p>
+          <p class="reveal-up">
+            Our team blends cutting-edge technology with artistic vision,
+            crafting interactive worlds, cinematic animations, and
+            photorealistic visualizations that push the boundaries of what's
+            possible on the web.
+          </p>
+          <p class="reveal-up">
+            Every pixel, every polygon, every frame — meticulously designed to
+            leave a lasting impression.
+          </p>
+        </div>
+        <div class="about-canvas-container">
+          <canvas id="about-canvas"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <h2 class="section-heading">
+        <span class="heading-inner">What We Do</span>
+      </h2>
+      <div class="services-grid">
+        <div class="service-card reveal-up hoverable" data-shape="box">
+          <span class="service-index">01</span>
+          <canvas class="service-canvas" width="120" height="120"></canvas>
+          <h3>3D Modeling</h3>
+          <p>
+            From concept to photorealistic 3D assets that breathe life into your
+            vision.
+          </p>
+        </div>
+        <div class="service-card reveal-up hoverable" data-shape="sphere">
+          <span class="service-index">02</span>
+          <canvas class="service-canvas" width="120" height="120"></canvas>
+          <h3>3D Animation</h3>
+          <p>Cinematic motion that tells your story with depth and emotion.</p>
+        </div>
+        <div class="service-card reveal-up hoverable" data-shape="cone">
+          <span class="service-index">03</span>
+          <canvas class="service-canvas" width="120" height="120"></canvas>
+          <h3>Interactive WebGL</h3>
+          <p>
+            Immersive browser-based 3D experiences that redefine interaction.
+          </p>
+        </div>
+        <div class="service-card reveal-up hoverable" data-shape="torus">
+          <span class="service-index">04</span>
+          <canvas class="service-canvas" width="120" height="120"></canvas>
+          <h3>Motion Design</h3>
+          <p>
+            Dynamic visuals that captivate audiences and amplify your message.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <h2 class="section-heading">
+        <span class="heading-inner">Selected Work</span>
+      </h2>
+      <div class="work-grid">
+        <div class="work-card reveal-up hoverable" data-work-shape="icosa">
+          <div class="work-visual"><canvas class="work-canvas"></canvas></div>
+          <div class="work-info">
+            <h3>NEBULA</h3>
+            <span class="tag">3D Animation</span>
+          </div>
+        </div>
+        <div class="work-card reveal-up hoverable" data-work-shape="octa">
+          <div class="work-visual"><canvas class="work-canvas"></canvas></div>
+          <div class="work-info">
+            <h3>VERTEX</h3>
+            <span class="tag">Product Visualization</span>
+          </div>
+        </div>
+        <div class="work-card reveal-up hoverable" data-work-shape="torusknot">
+          <div class="work-visual"><canvas class="work-canvas"></canvas></div>
+          <div class="work-info">
+            <h3>PHANTOM</h3>
+            <span class="tag">WebGL Experience</span>
+          </div>
+        </div>
+        <div class="work-card reveal-up hoverable" data-work-shape="dodeca">
+          <div class="work-visual"><canvas class="work-canvas"></canvas></div>
+          <div class="work-info">
+            <h3>ORBIT</h3>
+            <span class="tag">Motion Design</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="team">
+      <h2 class="section-heading">
+        <span class="heading-inner">The Crew</span>
+      </h2>
+      <div class="team-grid">
+        <div class="team-member reveal-up hoverable">
+          <div class="team-avatar">
+            <img src="/addiii.jpg" alt="Addiii" />
+          </div>
+          <div class="team-name">Addiii</div>
+          <div class="team-role">3D Artist & Founder</div>
+          <div class="team-links">
+            <a
+              href="https://github.com/adityavani07"
+              target="_blank"
+              class="hoverable"
+              >GitHub </a
+            ><span class="separator">|</span>
+            <a
+              href="https://www.linkedin.com/in/adityavani"
+              target="_blank"
+              class="hoverable"
+              >Linkedin</a
+            >
+          </div>
+        </div>
+
+        <div class="team-member reveal-up hoverable">
+          <div class="team-avatar">
+            <img src="/deval.jpg" alt="Deval" />
+          </div>
+          <div class="team-name">Deval</div>
+          <div class="team-role">Animator & Motion Designer</div>
+          <div class="team-links">
+            <a
+              href="https://github.com/Deval1506"
+              target="_blank"
+              class="hoverable"
+              >GitHub </a
+            ><span class="separator">|</span>
+            <a
+              href="https://www.linkedin.com/in/deval-rabadiya-30a192265/"
+              target="_blank"
+              class="hoverable"
+              >Linkedin</a
+            >
+          </div>
+        </div>
+
+        <div class="team-member reveal-up hoverable">
+          <div class="team-avatar">
+            <img src="/devansh.jpg" alt="Devansh" />
+          </div>
+          <div class="team-name">Devansh</div>
+          <div class="team-role">Creative Developer</div>
+          <div class="team-links">
+            <a
+              href="https://github.com/boraddevansh-lang"
+              target="_blank"
+              class="hoverable"
+              >GitHub </a
+            ><span class="separator">|</span>
+            <a
+              href="https://www.linkedin.com/in/devanshborad"
+              target="_blank"
+              class="hoverable"
+              >Linkedin</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="stats">
+      <div class="stats-grid">
+        <div class="stat-item reveal-up">
+          <div class="stat-number">
+            <span class="count" data-target="30">0</span
+            ><span class="suffix">+</span>
+          </div>
+          <div class="stat-label">Projects Delivered</div>
+        </div>
+        <div class="stat-item reveal-up">
+          <div class="stat-number">
+            <span class="count" data-target="3">0</span>
+          </div>
+          <div class="stat-label">Creative Minds</div>
+        </div>
+        <div class="stat-item reveal-up">
+          <div class="stat-number">
+            <span class="count" data-target="15">0</span
+            ><span class="suffix">+</span>
+          </div>
+          <div class="stat-label">Happy Clients</div>
+        </div>
+        <div class="stat-item reveal-up">
+          <div class="stat-number">
+            <span class="count" data-target="2">0</span
+            ><span class="suffix">+</span>
+          </div>
+          <div class="stat-label">Years of Craft</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="marquee-section">
+      <div class="marquee-row">
+        <div class="marquee-content">
+          <span
+            >PROJECT X &bull; 3D ANIMATION &bull; INTERACTIVE &bull; MOTION
+            DESIGN &bull; DIGITAL CRAFT &bull;</span
+          >
+          <span
+            >PROJECT X &bull; 3D ANIMATION &bull; INTERACTIVE &bull; MOTION
+            DESIGN &bull; DIGITAL CRAFT &bull;</span
+          >
+        </div>
+      </div>
+      <div class="marquee-row">
+        <div class="marquee-content">
+          <span
+            >WEBGL &bull; 3D MODELING &bull; CREATIVE STUDIO &bull; IMMERSIVE
+            WORLDS &bull; VISUAL DESIGN &bull;</span
+          >
+          <span
+            >WEBGL &bull; 3D MODELING &bull; CREATIVE STUDIO &bull; IMMERSIVE
+            WORLDS &bull; VISUAL DESIGN &bull;</span
+          >
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 class="section-heading">
+        <span class="heading-inner">Let's Create Something Extraordinary</span>
+      </h2>
+      <p class="contact-subtext reveal-up">
+        Have a project in mind? Let's talk.
+      </p>
+      <form class="contact-form" id="contactForm">
+        <div class="form-group reveal-up">
+          <input
+            type="text"
+            name="user_name"
+            id="user_name"
+            placeholder=" "
+            required
+          />
+          <label for="user_name">Your Name</label>
+        </div>
+        <div class="form-group reveal-up">
+          <input
+            type="email"
+            name="user_email"
+            id="user_email"
+            placeholder=" "
+            required
+          />
+          <label for="user_email">Email Address</label>
+        </div>
+        <div class="form-group reveal-up">
+          <textarea
+            name="message"
+            id="message"
+            placeholder=" "
+            rows="4"
+            required
+          ></textarea>
+          <label for="message">Project Details</label>
+        </div>
+        <button
+          type="submit"
+          class="submit-btn reveal-up hoverable"
+          id="submitBtn"
+        >
+          Send Message
+        </button>
+      </form>
+      <!--
+    <div class="contact-info reveal-up">
+      <a href="mailto:hello@projectx.studio" class="contact-email hoverable">hello@projectx.studio</a>
+      <div class="social-links">
+        <a href="#" class="hoverable">Instagram</a>
+        <a href="#" class="hoverable">Twitter/X</a>
+        <a href="#" class="hoverable">Behance</a>
+      </div>
+    </div>
+    --></section>
+
+    <footer id="footer">
+      <div class="footer-left">
+        <p>&copy; 2025 Project X. All rights reserved.</p>
+        <p>Crafted with passion in the void.</p>
+      </div>
+      <button class="back-to-top hoverable" id="backToTop">&#8593;</button>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
