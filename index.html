@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
-  <canvas id="bg-canvas"></canvas>
+    <canvas id="bg-canvas"></canvas>
     <div class="cursor" id="cursor"></div>
     <div class="cursor-dot" id="cursorDot"></div>
 
@@ -40,10 +40,27 @@
     <nav id="navbar">
       <a href="#hero" class="nav-logo hoverable">PROJECT X</a>
       <ul class="nav-links">
+        <li><a href="#about" class="hoverable">About</a></li>
         <li><a href="#work" class="hoverable">Work</a></li>
-        <li><a href="#services" class="hoverable">Services</a></li>
-        <li><a href="#team" class="hoverable">Team</a></li>
         <li><a href="#contact" class="hoverable">Contact</a></li>
+        <li>
+          <button
+            id="soundToggle"
+            class="hoverable"
+            style="
+              background: none;
+              border: none;
+              color: var(--grey);
+              font-family: inherit;
+              font-size: 0.85rem;
+              letter-spacing: 0.1em;
+              text-transform: uppercase;
+              transition: color 0.3s;
+            "
+          >
+            Sound: Off
+          </button>
+        </li>
       </ul>
       <button class="hamburger hoverable" id="hamburger">
         <span></span><span></span><span></span>
@@ -243,8 +260,7 @@
       <div class="stats-grid">
         <div class="stat-item reveal-up">
           <div class="stat-number">
-            <span class="count" data-target="5">0</span
-            >
+            <span class="count" data-target="5">0</span>
           </div>
           <div class="stat-label">Projects Delivered</div>
         </div>
@@ -256,8 +272,7 @@
         </div>
         <div class="stat-item reveal-up">
           <div class="stat-number">
-            <span class="count" data-target="5">0</span
-            >
+            <span class="count" data-target="5">0</span>
           </div>
           <div class="stat-label">Happy Clients</div>
         </div>

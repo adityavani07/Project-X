@@ -21,6 +21,64 @@ document.addEventListener('mousemove', (e) => {
 });
 
 // ============================================
+// AUDIO & SOUND DESIGN
+// ============================================
+const soundToggle = document.getElementById('soundToggle');
+
+// 1. Setup the Background Music
+const bgMusic = new Audio('/sounds/ambient-loop.mp3');
+bgMusic.loop = true;
+bgMusic.volume = 0.15; // Mixed down to 15%
+
+// 2. Setup the Hover Sound Effect
+const hoverSound = new Audio('/sounds/hover.mp3');
+hoverSound.volume = 0.3; // Mixed down to 30%
+
+let isSoundActive = false;
+
+// 3. The "Ghost Mouse" Fix: Track physical mouse movement time
+let lastMouseMoveTime = 0;
+window.addEventListener('mousemove', () => {
+  lastMouseMoveTime = Date.now();
+});
+
+if (soundToggle) {
+  soundToggle.addEventListener('click', () => {
+    isSoundActive = !isSoundActive;
+    
+    if (isSoundActive) {
+      // Browsers require a direct click to play audio. This handles it!
+      const playPromise = bgMusic.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(e => console.error("Audio block:", e));
+      }
+      soundToggle.innerText = 'Sound: On';
+      soundToggle.style.color = 'var(--white)';
+    } else {
+      bgMusic.pause();
+      soundToggle.innerText = 'Sound: Off';
+      soundToggle.style.color = 'var(--grey)';
+    }
+  });
+}
+
+// 4. Attach Hover Sounds with the Movement Check
+document.querySelectorAll('a, button, .hoverable, .work-card, .service-card').forEach(el => {
+  if (el.id === 'soundToggle') return; 
+
+  el.addEventListener('mouseenter', () => {
+    // Check if the physical mouse actually moved in the last 100 milliseconds
+    const didMouseMoveRecently = (Date.now() - lastMouseMoveTime) < 100;
+
+    // ONLY play the sound if the audio is on AND the user actually moved the mouse
+    if (isSoundActive && didMouseMoveRecently) {
+      hoverSound.currentTime = 0; 
+      hoverSound.play().catch(e => console.log("Hover sound failed:", e));
+    }
+  });
+});
+
+// ============================================
 // CUSTOM CURSOR
 // ============================================
 const cursor = document.getElementById('cursor');
