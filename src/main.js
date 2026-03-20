@@ -79,6 +79,26 @@ document.querySelectorAll('a, button, .hoverable, .work-card, .service-card').fo
 });
 
 // ============================================
+// CUSTOM SMOOTH SCROLL (Hides the URL preview)
+// ============================================
+document.querySelectorAll('a[data-target]').forEach(link => {
+  link.addEventListener('click', () => {
+    const targetId = link.getAttribute('data-target'); // Grabs "#about", etc.
+    const targetSection = document.querySelector(targetId);
+    
+    if (targetSection) {
+      targetSection.scrollIntoView({ behavior: 'smooth' });
+      
+      // If the mobile menu is open, close it automatically when a link is clicked
+      if (hamburger && mobileNav) {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      }
+    }
+  });
+});
+
+// ============================================
 // CUSTOM CURSOR
 // ============================================
 const cursor = document.getElementById('cursor');
