@@ -25,14 +25,14 @@ document.addEventListener('mousemove', (e) => {
 // ============================================
 const soundToggle = document.getElementById('soundToggle');
 
-// 1. Setup the Background Music
+// 1. Setup the Background Music (Quiet and ambient)
 const bgMusic = new Audio('/sounds/ambient-loop.mp3');
 bgMusic.loop = true;
-bgMusic.volume = 0.15; // Mixed down to 15%
+bgMusic.volume = 0.1; // Set to 10% volume so it stays quietly in the background
 
-// 2. Setup the Hover Sound Effect
+// 2. Setup the Hover Sound Effect (Loud and clear)
 const hoverSound = new Audio('/sounds/hover.mp3');
-hoverSound.volume = 0.3; // Mixed down to 30%
+hoverSound.volume = 0.9; // Set to 90% volume so the clicks really pop
 
 let isSoundActive = false;
 
