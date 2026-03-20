@@ -48,12 +48,27 @@ export default class BackgroundScene {
   }
 
   addEventListeners() {
-    // Track normalized mouse coordinates (-0.5 to 0.5)
+    // 1. Desktop Mouse Tracking
     window.addEventListener('mousemove', (event) => {
       this.mouseX = (event.clientX / window.innerWidth) - 0.5;
       this.mouseY = (event.clientY / window.innerHeight) - 0.5;
     });
 
+    // 2. Mobile Gyroscope Tracking (Unlocked via Vercel HTTPS)
+    if (typeof window.DeviceOrientationEvent !== 'undefined') {
+      window.addEventListener('deviceorientation', (e) => {
+        // Gamma is left/right tilt
+        const clampedGamma = Math.min(Math.max(e.gamma || 0, -45), 45);
+        // Beta is front/back tilt (offset by 60deg for a natural holding angle)
+        const clampedBeta = Math.min(Math.max((e.beta || 0) - 60, -45), 45);
+
+        // Map the degrees to a clean -1.0 to 1.0 ratio
+        this.mouseX = clampedGamma / 45;
+        this.mouseY = -(clampedBeta / 45);
+      });
+    }
+
+    // 3. Window Resize
     window.addEventListener('resize', () => {
       this.renderer.setSize(window.innerWidth, window.innerHeight);
       this.camera.aspect = window.innerWidth / window.innerHeight;
