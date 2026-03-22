@@ -30,6 +30,37 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Hide the 3D canvases on mobile when the fallback class is active */
+.show-fallback canvas {
+  display: none !important;
+}
+
+/* Example: Create a sleek CSS-only visual for the Work Cards on mobile */
+.work-card.show-fallback .work-visual {
+  background: linear-gradient(135deg, #222 0%, #111 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+/* Add a simple CSS glowing shape as a placeholder */
+.work-card.show-fallback .work-visual::after {
+  content: '';
+  width: 50px;
+  height: 50px;
+  background: var(--cyan); /* Or whatever your accent color is */
+  filter: blur(20px);
+  opacity: 0.5;
+  border-radius: 50%;
+}
+
+/* Example: Clean CSS fallback for Service Cards */
+.service-card.show-fallback {
+  border-top: 2px solid #444; /* Just a clean UI accent instead of 3D */
+}
+
 /* ============================================
    GLOBAL BACKGROUND SCENE
    ============================================ */

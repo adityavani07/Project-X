@@ -298,11 +298,15 @@ function animateHeroContent() {
 }
 
 // ============================================
-// THREE.JS: Selected WORK SCENE (see WorkScene.js for details)
+// THREE.JS: Selected WORK SCENE
 // ============================================
-
 document.querySelectorAll('.work-card').forEach(card => {
-  new WorkScene(card);
+  // BAILOUT: If mobile, skip WebGL and add a fallback class
+  if (isMobile) {
+    card.classList.add('show-fallback');
+  } else {
+    new WorkScene(card);
+  }
 });
 
 // ============================================
