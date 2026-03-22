@@ -78,6 +78,20 @@ document.querySelectorAll('a, button, .hoverable, .work-card, .service-card').fo
   });
 });
 
+// Prevent right-click context menu on all images, even dynamically loaded ones
+document.addEventListener('contextmenu', (e) => {
+  if (e.target.tagName === 'IMG') {
+    e.preventDefault();
+  }
+});
+
+// Extra layer: Prevent dragging on the whole document just in case
+document.addEventListener('dragstart', (e) => {
+  if (e.target.tagName === 'IMG') {
+    e.preventDefault();
+  }
+});
+
 // ============================================
 // CUSTOM SMOOTH SCROLL (Hides the URL preview)
 // ============================================
@@ -335,7 +349,16 @@ function initAbout() {
 
 function initMiniCanvases() {
   document.querySelectorAll('.service-card').forEach(card => {
+
+    // BAILOUT: If mobile, skip WebGL and add a fallback class
+    if (isMobile) {
+      card.classList.add('show-fallback');
+      return; 
+    }
+
     const canvas = card.querySelector('.service-canvas');
+    if (!canvas) return;
+
     const shape = card.dataset.shape;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);

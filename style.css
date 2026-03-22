@@ -20,6 +20,14 @@ body {
   color: var(--white);
   overflow-x: hidden;
   cursor: none;
+  /* Prevent text highlighting */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  
+  /* Remove the blue flash when tapping links on mobile */
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ============================================
@@ -37,10 +45,19 @@ body {
 
 a { color: inherit; text-decoration: none; }
 button { cursor: none; }
-input, textarea { cursor: none; }
+input, textarea { 
+  cursor: none; 
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;}
 
 /* Hide default cursor on all interactive */
-a, button, input, textarea, .hoverable { cursor: none; }
+a, button, input, textarea, .hoverable { 
+  cursor: none; -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;}
 
 /* ============================================
    CUSTOM CURSOR
@@ -343,6 +360,17 @@ a, button, input, textarea, .hoverable { cursor: none; }
   height: 100%;
   background: var(--white);
   animation: scrollLine 2s ease-in-out infinite;
+}
+
+img {
+  /* 1. Stop dragging in Chrome/Safari */
+  -webkit-user-drag: none;
+  
+  /* 2. Stop mobile long-press "Save Image" menus */
+  -webkit-touch-callout: none;
+  
+  /* 3. The Nuclear Option: Ignores all clicks */
+  pointer-events: none; 
 }
 
 @keyframes scrollLine {
