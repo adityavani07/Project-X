@@ -230,12 +230,17 @@ navCloseBtns.forEach(btn => {
 });
 
 let lastScroll = 0;
-const navbar = document.getElementById('navbar');
+const navbar        = document.getElementById('navbar');
+const scrollProgress = document.getElementById('scroll-progress');
 window.addEventListener('scroll', () => {
   const s = window.pageYOffset;
   navbar.classList.toggle('scrolled', s > 100);
   navbar.classList.toggle('hidden', s > lastScroll && s > 300);
   lastScroll = s;
+  if (scrollProgress) {
+    const pct = s / (document.body.scrollHeight - window.innerHeight);
+    scrollProgress.style.transform = `scaleX(${Math.min(pct, 1)})`;
+  }
 });
 
 document.getElementById('backToTop').addEventListener('click', () => {
@@ -552,6 +557,26 @@ window.addEventListener('resize', () => {
 });
 
 // ============================================
+// SECTION GHOST NUMBERS
+// ============================================
+function initSectionNumbers() {
+  const map = [
+    ['#services', '01'],
+    ['#work',     '02'],
+    ['#team',     '03'],
+    ['#contact',  '04'],
+  ];
+  map.forEach(([sel, num]) => {
+    const section = document.querySelector(sel);
+    if (!section) return;
+    const ghost = document.createElement('div');
+    ghost.className = 'section-ghost-num';
+    ghost.textContent = num;
+    section.insertBefore(ghost, section.firstChild);
+  });
+}
+
+// ============================================
 // BOOT
 // ============================================
 initPreloader();
@@ -564,3 +589,17 @@ initMagnetic();
 initCursorTrail();
 initWorkOverlays();
 initContactGlobe();
+initSectionNumbers();
+
+// Active nav highlight via IntersectionObserver
+const navLinks = document.querySelectorAll('.nav-links a[data-target]');
+const ioObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.dataset.target === `#${entry.target.id}`);
+      });
+    }
+  });
+}, { threshold: 0.35 });
+document.querySelectorAll('section[id]').forEach(s => ioObserver.observe(s));

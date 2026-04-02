@@ -1261,3 +1261,194 @@ body::after {
     height: 320px;
   }
 }
+
+/* ============================================
+   SCROLL PROGRESS BAR
+   ============================================ */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.55);
+  transform: scaleX(0);
+  transform-origin: left center;
+  z-index: 100002;
+  pointer-events: none;
+}
+
+/* ============================================
+   HERO TITLE GLITCH
+   ============================================ */
+.hero-title {
+  animation: titleGlitch 10s 3.5s infinite;
+}
+
+@keyframes titleGlitch {
+  0%, 90%, 100% {
+    transform: none;
+    text-shadow: none;
+  }
+  92% {
+    transform: skewX(-4deg) translateX(-5px);
+    text-shadow:  4px 0 rgba(255, 80, 80, 0.25), -4px 0 rgba(80, 80, 255, 0.25);
+  }
+  94% {
+    transform: skewX(3deg) translateX(5px);
+    text-shadow: -4px 0 rgba(255, 80, 80, 0.25),  4px 0 rgba(80, 80, 255, 0.25);
+  }
+  96% {
+    transform: skewX(-1deg) translateX(-2px);
+    text-shadow:  2px 0 rgba(255, 80, 80, 0.15), -2px 0 rgba(80, 80, 255, 0.15);
+  }
+  98% {
+    transform: none;
+    text-shadow: none;
+  }
+}
+
+/* ============================================
+   SECTION GHOST NUMBERS
+   ============================================ */
+.section-ghost-num {
+  position: absolute;
+  top: 40px;
+  right: -5px;
+  font-size: clamp(7rem, 18vw, 17rem);
+  font-weight: 800;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.045);
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+  z-index: 0;
+  letter-spacing: -0.04em;
+}
+
+/* ============================================
+   SERVICE CARD SHIMMER SWEEP
+   ============================================ */
+.service-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.045) 50%,
+    transparent 70%
+  );
+  z-index: 0;
+  pointer-events: none;
+  transition: left 0.7s ease;
+}
+
+.service-card:hover::after {
+  left: 160%;
+}
+
+/* ============================================
+   WORK VISUAL SCAN LINE ON HOVER
+   ============================================ */
+.work-visual::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  z-index: 6;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.work-card:hover .work-visual::before {
+  opacity: 1;
+  animation: scanDown 0.85s ease-in forwards;
+}
+
+@keyframes scanDown {
+  0%   { transform: translateY(0);    opacity: 0.9; }
+  80%  {                              opacity: 0.4; }
+  100% { transform: translateY(600px); opacity: 0; }
+}
+
+/* ============================================
+   WORK INFO H3 UNDERLINE ON HOVER
+   ============================================ */
+.work-info h3 {
+  transition: color 0.4s ease;
+}
+
+.work-info h3::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: var(--white);
+  width: 0;
+  margin-top: 4px;
+  transition: width 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.work-card:hover .work-info h3::after {
+  width: 100%;
+}
+
+/* ============================================
+   TEAM AVATAR GLOW & PULSE
+   ============================================ */
+.team-member:hover .team-avatar {
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.1), 0 0 80px rgba(255, 255, 255, 0.04);
+}
+
+.team-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  filter: grayscale(30%);
+  transition: filter 0.5s ease;
+}
+
+.team-member:hover .team-avatar img {
+  filter: grayscale(0%);
+}
+
+/* ============================================
+   STATS SECTION GLOW
+   ============================================ */
+.stat-number {
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.07);
+}
+
+/* ============================================
+   MARQUEE EDGE VIGNETTE
+   ============================================ */
+#marquee-section {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+/* ============================================
+   ABOUT SECTION — HIGHLIGHT KEYWORDS
+   ============================================ */
+.about-text .highlight {
+  color: var(--white);
+  font-weight: 400;
+}
+
+/* ============================================
+   NAV LINKS — ACTIVE STATE
+   ============================================ */
+.nav-links a.active {
+  color: var(--white);
+}
+
+.nav-links a.active::after {
+  width: 100%;
+}
