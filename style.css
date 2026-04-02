@@ -1143,3 +1143,121 @@ section {
     text-align: center;
   }
 }
+/* ============================================
+   FILM GRAIN OVERLAY
+   ============================================ */
+body::after {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  z-index: 99997;
+  pointer-events: none;
+  opacity: 0.038;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px;
+  animation: grain 0.85s steps(1) infinite;
+  will-change: transform;
+}
+
+@keyframes grain {
+  0%,100% { transform: translate(0,0); }
+  10%     { transform: translate(-2%,-4%); }
+  20%     { transform: translate(-5%, 2%); }
+  30%     { transform: translate( 3%,-7%); }
+  40%     { transform: translate(-2%, 7%); }
+  50%     { transform: translate(-5%, 3%); }
+  60%     { transform: translate( 5%, 0%); }
+  70%     { transform: translate( 0%, 5%); }
+  80%     { transform: translate( 2%, 9%); }
+  90%     { transform: translate(-4%, 3%); }
+}
+
+/* ============================================
+   CURSOR PARTICLE TRAIL
+   ============================================ */
+.cursor-particle {
+  position: fixed;
+  width: 3px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  animation: particleFade 0.75s ease-out forwards;
+}
+
+@keyframes particleFade {
+  0%   { opacity: 0.75; transform: translate(-50%,-50%) scale(1); }
+  100% { opacity: 0;    transform: translate(-50%,-50%) scale(0.1); }
+}
+
+/* ============================================
+   WORK CARD HOVER OVERLAY
+   ============================================ */
+.work-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.1) 55%, transparent 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 18px 22px;
+  transform: translateY(100%);
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 5;
+}
+
+.work-card:hover .work-overlay {
+  transform: translateY(0);
+}
+
+.work-overlay-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.work-overlay-label::after {
+  content: '→';
+  display: inline-block;
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.work-card:hover .work-overlay-label::after {
+  transform: translateX(6px);
+}
+
+/* ============================================
+   CONTACT GLOBE CANVAS
+   ============================================ */
+#contact-globe-canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 520px;
+  height: 520px;
+  opacity: 0.13;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#contact > *:not(canvas) {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  #contact-globe-canvas {
+    width: 320px;
+    height: 320px;
+  }
+}
