@@ -13,9 +13,9 @@ export default class BackgroundScene {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // Variables for mouse tracking
     this.mouseX = 0;
     this.mouseY = 0;
+    this.scrollVelocity = 0;
 
     this.initStars();
     this.addEventListeners();
@@ -24,23 +24,21 @@ export default class BackgroundScene {
 
   initStars() {
     const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 1500; // Number of stars
+    const particlesCount = 1500;
     const posArray = new Float32Array(particlesCount * 3);
 
-    // Randomly scatter stars across a wide 3D space
-    for(let i = 0; i < particlesCount * 3; i++) {
+    for (let i = 0; i < particlesCount * 3; i++) {
       posArray[i] = (Math.random() - 0.5) * 20;
     }
 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    
-    // Material for the stars
+
     const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.015, // Tiny dots
+      size: 0.015,
       color: 0xffffff,
       transparent: true,
       opacity: 0.6,
-      blending: THREE.AdditiveBlending // Gives a slight glowing effect where stars overlap
+      blending: THREE.AdditiveBlending
     });
 
     this.particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
@@ -48,27 +46,16 @@ export default class BackgroundScene {
   }
 
   addEventListeners() {
-    // 1. Desktop Mouse Tracking
-    window.addEventListener('mousemove', (event) => {
-      this.mouseX = (event.clientX / window.innerWidth) - 0.5;
-      this.mouseY = (event.clientY / window.innerHeight) - 0.5;
+    // Desktop mouse
+    window.addEventListener('mousemove', (e) => {
+      this.mouseX = (e.clientX / window.innerWidth) - 0.5;
+      this.mouseY = (e.clientY / window.innerHeight) - 0.5;
     });
 
-    // 2. Mobile Gyroscope Tracking (Unlocked via Vercel HTTPS)
-    if (typeof window.DeviceOrientationEvent !== 'undefined') {
-      window.addEventListener('deviceorientation', (e) => {
-        // Gamma is left/right tilt
-        const clampedGamma = Math.min(Math.max(e.gamma || 0, -45), 45);
-        // Beta is front/back tilt (offset by 60deg for a natural holding angle)
-        const clampedBeta = Math.min(Math.max((e.beta || 0) - 60, -45), 45);
+    // Gyroscope setup
+    this._setupGyro();
 
-        // Map the degrees to a clean -1.0 to 1.0 ratio
-        this.mouseX = clampedGamma / 45;
-        this.mouseY = -(clampedBeta / 45);
-      });
-    }
-
-    // 3. Window Resize
+    // Resize
     window.addEventListener('resize', () => {
       this.renderer.setSize(window.innerWidth, window.innerHeight);
       this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -76,40 +63,86 @@ export default class BackgroundScene {
     });
   }
 
+  _onDeviceOrientation(e) {
+    // Gamma = left/right tilt, Beta = front/back tilt
+    const clampedGamma = Math.min(Math.max(e.gamma || 0, -45), 45);
+    const clampedBeta  = Math.min(Math.max((e.beta  || 0) - 60, -45), 45);
+    this.mouseX =  clampedGamma / 45;
+    this.mouseY = -(clampedBeta  / 45);
+  }
+
+  _setupGyro() {
+    if (typeof DeviceOrientationEvent === 'undefined') return;
+
+    // iOS 13+ requires explicit permission via a user gesture
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      // Show a small banner prompting the user to enable gyro
+      const banner = document.createElement('div');
+      banner.id = 'gyro-banner';
+      banner.innerHTML = '<span>Tap to enable gyroscope</span>';
+      Object.assign(banner.style, {
+        position: 'fixed',
+        bottom: '80px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        background: 'rgba(255,255,255,0.07)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255,255,255,0.15)',
+        color: '#fff',
+        fontSize: '0.75rem',
+        letterSpacing: '0.1em',
+        padding: '10px 22px',
+        borderRadius: '999px',
+        cursor: 'pointer',
+        zIndex: '9999',
+        opacity: '0',
+        transition: 'opacity 0.5s ease',
+        pointerEvents: 'auto',
+        textTransform: 'uppercase',
+      });
+
+      document.body.appendChild(banner);
+
+      // Fade in after a short delay so it doesn't flash on desktop
+      setTimeout(() => { banner.style.opacity = '1'; }, 2000);
+
+      banner.addEventListener('click', () => {
+        DeviceOrientationEvent.requestPermission()
+          .then(state => {
+            if (state === 'granted') {
+              window.addEventListener('deviceorientation', (e) => this._onDeviceOrientation(e));
+            }
+            banner.style.opacity = '0';
+            setTimeout(() => banner.remove(), 600);
+          })
+          .catch(() => {
+            banner.style.opacity = '0';
+            setTimeout(() => banner.remove(), 600);
+          });
+      });
+
+    } else {
+      // Android and non-permission browsers — just listen directly
+      window.addEventListener('deviceorientation', (e) => this._onDeviceOrientation(e));
+    }
+  }
+
   setVelocity(velocity) {
-    // We divide by a large number so the math doesn't make it spin out of control
-    this.scrollVelocity = velocity * 0.0005; 
+    this.scrollVelocity = velocity * 0.0005;
   }
 
   animate = () => {
-    // 1. Initialize velocity if it doesn't exist
-    if (!this.scrollVelocity) this.scrollVelocity = 0;
-
-    // 2. Add the scroll velocity to the base rotation
-    // Math.abs ensures it always spins forward, whether scrolling up or down
+    // Constant slow drift
     this.particlesMesh.rotation.y += 0.0003 + Math.abs(this.scrollVelocity);
     this.particlesMesh.rotation.x += 0.0001 + (this.scrollVelocity * 0.5);
 
-    // 3. Smooth mouse parallax
-    this.particlesMesh.position.x += (this.mouseX * 0.5 - this.particlesMesh.position.x) * 0.05;
+    // Smooth parallax (mouse on desktop, gyro on mobile)
+    this.particlesMesh.position.x += (this.mouseX * 0.5  - this.particlesMesh.position.x) * 0.05;
     this.particlesMesh.position.y += (-this.mouseY * 0.5 - this.particlesMesh.position.y) * 0.05;
 
-    // 4. Dampen the velocity (friction) so it smoothly slows down when scrolling stops
+    // Dampen scroll velocity
     this.scrollVelocity *= 0.9;
-
-    this.renderer.render(this.scene, this.camera);
-    requestAnimationFrame(this.animate);
-  }
-
-  animate = () => {
-    // 1. Base constant slow rotation
-    this.particlesMesh.rotation.y += 0.0003;
-    this.particlesMesh.rotation.x += 0.0001;
-
-    // 2. Smooth parallax effect based on cursor position
-    // We use linear interpolation (lerp) for that buttery smooth trailing feel
-    this.particlesMesh.position.x += (this.mouseX * 0.5 - this.particlesMesh.position.x) * 0.05;
-    this.particlesMesh.position.y += (-this.mouseY * 0.5 - this.particlesMesh.position.y) * 0.05;
 
     this.renderer.render(this.scene, this.camera);
     requestAnimationFrame(this.animate);
