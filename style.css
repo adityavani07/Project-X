@@ -1673,3 +1673,122 @@ body::after {
     right: 20px;
   }
 }
+
+/* ============================================
+   MOBILE / TOUCH COMPREHENSIVE FIXES
+   ============================================ */
+
+/* 1. Restore native cursor on touch / coarse-pointer devices */
+@media (pointer: coarse) {
+  body,
+  body *,
+  a,
+  button,
+  .hoverable {
+    cursor: auto !important;
+  }
+
+  .cursor,
+  .cursor-dot,
+  .cursor-particle {
+    display: none !important;
+  }
+
+  /* 2. Work card tap feedback (replaces hover overlay) */
+  .work-card:active .work-visual {
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* 3. Service card — skip shimmer pseudo-element, just border */
+  .service-card::after {
+    display: none;
+  }
+}
+
+/* 4. Team expand hint — always visible on mobile */
+@media (max-width: 768px) {
+  .team-expand-hint {
+    opacity: 0.45;
+    transform: translateY(0);
+  }
+
+  /* 5. Remove 3D perspective tilt on mobile (looks stuck after tap) */
+  .team-member:hover .team-avatar,
+  .team-member:active .team-avatar {
+    transform: scale(1.04);
+  }
+
+  /* 6. Hero title glitch — disable on mobile (saves battery, avoids glitches) */
+  .hero-title {
+    animation: none;
+  }
+
+  /* 7. Ghost numbers — smaller & don't overflow on landscape */
+  .section-ghost-num {
+    font-size: clamp(4.5rem, 20vw, 7rem);
+    top: 30px;
+    right: 0;
+  }
+}
+
+/* 8. Crew overlay — small screens (≤ 480px) */
+@media (max-width: 480px) {
+  #crew-overlay {
+    overflow-y: auto;
+    align-items: flex-start;
+    padding: 80px 24px 48px;
+  }
+
+  .crew-content {
+    padding: 0;
+    gap: 32px;
+  }
+
+  .crew-photo-wrap img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .crew-photo-ring {
+    inset: -8px;
+  }
+
+  .crew-photo-ring--outer {
+    inset: -18px;
+  }
+
+  .crew-name-lbl {
+    font-size: 2.6rem;
+  }
+
+  .crew-bio-lbl {
+    font-size: 0.9rem;
+  }
+
+  #crew-close {
+    top: 22px;
+    right: 22px;
+    width: 42px;
+    height: 42px;
+    line-height: 42px;
+  }
+}
+
+/* 9. Marquee — tighter on mobile */
+@media (max-width: 768px) {
+  .marquee-text {
+    font-size: clamp(2.5rem, 10vw, 5rem);
+    gap: 30px;
+  }
+}
+
+/* 10. Stats grid — wrap nicely on very small screens */
+@media (max-width: 480px) {
+  .stats-grid {
+    gap: 24px;
+  }
+
+  .stat-number {
+    font-size: clamp(2.2rem, 12vw, 3.5rem);
+  }
+}

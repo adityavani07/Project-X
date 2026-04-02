@@ -182,6 +182,7 @@ function initTextScramble() {
 // MAGNETIC BUTTONS
 // ============================================
 function initMagnetic() {
+  if ('ontouchstart' in window) return;
   document.querySelectorAll('.nav-links a, .submit-btn, .back-to-top').forEach(el => {
     el.addEventListener('mousemove', (e) => {
       const rect = el.getBoundingClientRect();
