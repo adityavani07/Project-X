@@ -590,6 +590,190 @@ initCursorTrail();
 initWorkOverlays();
 initContactGlobe();
 initSectionNumbers();
+initCrewOverlay();
+
+// ============================================
+// CREW PROFILE OVERLAY
+// ============================================
+function initCrewOverlay() {
+  const crewData = {
+    addiii: {
+      name: 'Addiii',
+      role: '3D Artist & Founder',
+      bio: 'The visionary behind Project X. Addiii pushes the boundaries of real-time 3D, turning raw ideas into breathtaking digital worlds that blur the line between art and technology.',
+      skills: ['Three.js', 'Blender', 'GSAP', 'WebGL', 'Creative Direction'],
+      github:   'https://github.com/adityavani07',
+      linkedin: 'https://www.linkedin.com/in/adityavani',
+      img:      '/addiii.jpg',
+      particle: 'orbit',
+    },
+    deval: {
+      name: 'Deval',
+      role: 'Animator & Motion Designer',
+      bio: 'Motion is Deval\'s language. From cinematic transitions to perfectly timed micro-interactions, every movement is intentional, considered, and precisely crafted.',
+      skills: ['After Effects', 'Cinema 4D', 'GSAP', 'Motion Graphics', 'Spline'],
+      github:   'https://github.com/Deval1506',
+      linkedin: 'https://www.linkedin.com/in/deval-rabadiya-30a192265/',
+      img:      '/deval.jpg',
+      particle: 'wave',
+    },
+    devansh: {
+      name: 'Devansh',
+      role: 'Creative Developer',
+      bio: 'Where code meets craft. Devansh architects the technical foundation that makes the impossible interactive — building the systems that bring every creative vision to life.',
+      skills: ['React', 'WebGL', 'GSAP', 'Creative Coding', 'Node.js'],
+      github:   'https://github.com/boraddevansh-lang',
+      linkedin: 'https://www.linkedin.com/in/devanshborad',
+      img:      '/devansh.jpg',
+      particle: 'code',
+    },
+  };
+
+  const overlay     = document.getElementById('crew-overlay');
+  const overlayCanvas = document.getElementById('crew-canvas');
+  const closeBtn    = document.getElementById('crew-close');
+  const photoEl     = document.getElementById('crew-photo');
+  const roleLbl     = document.getElementById('crew-role-lbl');
+  const nameLbl     = document.getElementById('crew-name-lbl');
+  const bioLbl      = document.getElementById('crew-bio-lbl');
+  const skillsWrap  = document.getElementById('crew-skills-wrap');
+  const socialWrap  = document.getElementById('crew-social-wrap');
+  const crewContent = overlay.querySelector('.crew-content');
+
+  let animId = null;
+  let ctx2d  = null;
+
+  function stopParticles() {
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+  }
+
+  function runParticles(type) {
+    stopParticles();
+    overlayCanvas.width  = overlayCanvas.offsetWidth;
+    overlayCanvas.height = overlayCanvas.offsetHeight;
+    ctx2d = overlayCanvas.getContext('2d');
+    const W = overlayCanvas.width;
+    const H = overlayCanvas.height;
+    let t = 0;
+
+    function loop() {
+      t += 0.016;
+      ctx2d.clearRect(0, 0, W, H);
+      if (type === 'orbit') drawOrbit(W, H, t);
+      if (type === 'wave')  drawWave(W, H, t);
+      if (type === 'code')  drawCode(W, H, t);
+      animId = requestAnimationFrame(loop);
+    }
+    loop();
+  }
+
+  function drawOrbit(W, H, t) {
+    const cx = W / 2, cy = H / 2;
+    const rings = [
+      { rx: W * 0.44, ry: H * 0.19, n: 100, speed:  0.22, sz: 1.7 },
+      { rx: W * 0.33, ry: H * 0.13, n:  70, speed: -0.38, sz: 1.3 },
+      { rx: W * 0.21, ry: H * 0.08, n:  45, speed:  0.6,  sz: 0.9 },
+    ];
+    rings.forEach(r => {
+      for (let i = 0; i < r.n; i++) {
+        const a = (i / r.n) * Math.PI * 2 + t * r.speed;
+        const x = cx + Math.cos(a) * r.rx;
+        const y = cy + Math.sin(a) * r.ry;
+        ctx2d.globalAlpha = 0.12 + 0.38 * ((Math.sin(a * 2) + 1) / 2);
+        ctx2d.fillStyle = '#ffffff';
+        ctx2d.beginPath();
+        ctx2d.arc(x, y, r.sz, 0, Math.PI * 2);
+        ctx2d.fill();
+      }
+    });
+    ctx2d.globalAlpha = 1;
+  }
+
+  function drawWave(W, H, t) {
+    const rows = 12, cols = 55;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const x = (c / (cols - 1)) * W;
+        const baseY = H * 0.2 + (r / (rows - 1)) * H * 0.6;
+        const y = baseY + Math.sin((c / cols) * Math.PI * 6 + t * 1.8 + r * 0.7) * 28;
+        ctx2d.globalAlpha = 0.08 + 0.22 * Math.abs(Math.sin(c * 0.25 + t * 0.8));
+        ctx2d.fillStyle = '#ffffff';
+        ctx2d.beginPath();
+        ctx2d.arc(x, y, 1.6, 0, Math.PI * 2);
+        ctx2d.fill();
+      }
+    }
+    ctx2d.globalAlpha = 1;
+  }
+
+  function drawCode(W, H, t) {
+    const streams = 35;
+    for (let s = 0; s < streams; s++) {
+      const x = (s / streams) * W + W / streams / 2;
+      const speed = 55 + (s % 7) * 20;
+      const len   = 12 + (s % 5) * 3;
+      const offset = (s * 173.6) % H;
+      for (let d = 0; d < len; d++) {
+        const y = ((offset + d * 22 + t * speed) % H);
+        ctx2d.globalAlpha = (1 - d / len) * 0.28;
+        ctx2d.fillStyle = '#ffffff';
+        ctx2d.beginPath();
+        ctx2d.arc(x, y, 1.5, 0, Math.PI * 2);
+        ctx2d.fill();
+      }
+    }
+    ctx2d.globalAlpha = 1;
+  }
+
+  function openOverlay(key) {
+    const d = crewData[key];
+    if (!d) return;
+
+    photoEl.src        = d.img;
+    photoEl.alt        = d.name;
+    roleLbl.textContent = d.role;
+    nameLbl.textContent = d.name;
+    bioLbl.textContent  = d.bio;
+
+    skillsWrap.innerHTML = d.skills
+      .map(s => `<span class="crew-skill-tag">${s}</span>`)
+      .join('');
+
+    socialWrap.innerHTML = [
+      d.github   ? `<a href="${d.github}"   target="_blank" class="hoverable">GitHub</a>`   : '',
+      d.linkedin ? `<a href="${d.linkedin}" target="_blank" class="hoverable">LinkedIn</a>` : '',
+    ].join('');
+
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    gsap.fromTo(crewContent,
+      { y: 50, opacity: 0 },
+      { y: 0,  opacity: 1, duration: 0.65, ease: 'power3.out' }
+    );
+
+    requestAnimationFrame(() => runParticles(d.particle));
+  }
+
+  function closeOverlay() {
+    gsap.to(crewContent, {
+      y: 30, opacity: 0, duration: 0.35, ease: 'power2.in',
+      onComplete: () => {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+        stopParticles();
+      },
+    });
+  }
+
+  document.querySelectorAll('.team-member[data-crew]').forEach(el => {
+    el.addEventListener('click', () => openOverlay(el.dataset.crew));
+  });
+
+  closeBtn.addEventListener('click', closeOverlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeOverlay(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOverlay(); });
+}
 
 // Active nav highlight via IntersectionObserver
 const navLinks = document.querySelectorAll('.nav-links a[data-target]');

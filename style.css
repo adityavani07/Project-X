@@ -1452,3 +1452,224 @@ body::after {
 .nav-links a.active::after {
   width: 100%;
 }
+
+/* ============================================
+   TEAM EXPAND HINT
+   ============================================ */
+.team-expand-hint {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-top: 14px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+
+.team-member[data-crew] {
+  cursor: pointer;
+}
+
+.team-member[data-crew]:hover .team-expand-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   CREW PROFILE OVERLAY
+   ============================================ */
+#crew-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.97);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+
+#crew-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+#crew-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#crew-close {
+  position: absolute;
+  top: 36px;
+  right: 40px;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--white);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 46px;
+  text-align: center;
+  transition: border-color 0.3s ease, transform 0.4s ease;
+  z-index: 2;
+}
+
+#crew-close:hover {
+  border-color: var(--white);
+  transform: rotate(90deg);
+}
+
+.crew-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  max-width: 920px;
+  width: 90%;
+  padding: 40px 0;
+}
+
+.crew-photo-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.crew-photo-wrap img {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  position: relative;
+  z-index: 1;
+  filter: grayscale(0%);
+}
+
+.crew-photo-ring {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  animation: crewRingPulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.crew-photo-ring--outer {
+  inset: -26px;
+  border-color: rgba(255, 255, 255, 0.07);
+  animation-delay: 1s;
+  animation-duration: 4s;
+}
+
+@keyframes crewRingPulse {
+  0%, 100% { transform: scale(1);    opacity: 0.35; }
+  50%       { transform: scale(1.04); opacity: 0.75; }
+}
+
+.crew-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.crew-role-lbl {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: var(--grey);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.crew-name-lbl {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+
+.crew-bio-lbl {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--light-grey);
+  margin-bottom: 32px;
+  max-width: 460px;
+}
+
+.crew-skills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.crew-skill-tag {
+  padding: 6px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--grey);
+  text-transform: uppercase;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.crew-skill-tag:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  color: var(--white);
+}
+
+.crew-social-wrap {
+  display: flex;
+  gap: 24px;
+}
+
+.crew-social-wrap a {
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  color: var(--grey);
+  text-decoration: none;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  padding-bottom: 3px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.crew-social-wrap a:hover {
+  color: var(--white);
+  border-color: var(--white);
+}
+
+@media (max-width: 700px) {
+  .crew-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 40px;
+  }
+
+  .crew-skills-wrap,
+  .crew-social-wrap {
+    justify-content: center;
+  }
+
+  .crew-bio-lbl {
+    max-width: 100%;
+  }
+
+  #crew-close {
+    top: 20px;
+    right: 20px;
+  }
+}

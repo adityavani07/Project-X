@@ -189,70 +189,46 @@
         <span class="heading-inner">The Crew</span>
       </h2>
       <div class="team-grid">
-        <div class="team-member reveal-up hoverable">
+        <div class="team-member reveal-up hoverable" data-crew="addiii">
           <div class="team-avatar">
             <img src="/addiii.jpg" alt="Addiii" />
           </div>
           <div class="team-name">Addiii</div>
           <div class="team-role">3D Artist & Founder</div>
           <div class="team-links">
-            <a
-              href="https://github.com/adityavani07"
-              target="_blank"
-              class="hoverable"
-              >GitHub </a
+            <a href="https://github.com/adityavani07"  target="_blank" class="hoverable">GitHub </a
             ><span class="separator">|</span>
-            <a
-              href="https://www.linkedin.com/in/adityavani"
-              target="_blank"
-              class="hoverable"
-              >Linkedin</a
-            >
+            <a href="https://www.linkedin.com/in/adityavani" target="_blank" class="hoverable">Linkedin</a>
           </div>
+          <div class="team-expand-hint">Explore Profile →</div>
         </div>
 
-        <div class="team-member reveal-up hoverable">
+        <div class="team-member reveal-up hoverable" data-crew="deval">
           <div class="team-avatar">
             <img src="/deval.jpg" alt="Deval" />
           </div>
           <div class="team-name">Deval</div>
           <div class="team-role">Animator & Motion Designer</div>
           <div class="team-links">
-            <a
-              href="https://github.com/Deval1506"
-              target="_blank"
-              class="hoverable"
-              >GitHub </a
+            <a href="https://github.com/Deval1506" target="_blank" class="hoverable">GitHub </a
             ><span class="separator">|</span>
-            <a
-              href="https://www.linkedin.com/in/deval-rabadiya-30a192265/"
-              target="_blank"
-              class="hoverable"
-              >Linkedin</a
-            >
+            <a href="https://www.linkedin.com/in/deval-rabadiya-30a192265/" target="_blank" class="hoverable">Linkedin</a>
           </div>
+          <div class="team-expand-hint">Explore Profile →</div>
         </div>
 
-        <div class="team-member reveal-up hoverable">
+        <div class="team-member reveal-up hoverable" data-crew="devansh">
           <div class="team-avatar">
             <img src="/devansh.jpg" alt="Devansh" />
           </div>
           <div class="team-name">Devansh</div>
           <div class="team-role">Creative Developer</div>
           <div class="team-links">
-            <a
-              href="https://github.com/boraddevansh-lang"
-              target="_blank"
-              class="hoverable"
-              >GitHub </a
+            <a href="https://github.com/boraddevansh-lang" target="_blank" class="hoverable">GitHub </a
             ><span class="separator">|</span>
-            <a
-              href="https://www.linkedin.com/in/devanshborad"
-              target="_blank"
-              class="hoverable"
-              >Linkedin</a
-            >
+            <a href="https://www.linkedin.com/in/devanshborad" target="_blank" class="hoverable">Linkedin</a>
           </div>
+          <div class="team-expand-hint">Explore Profile →</div>
         </div>
       </div>
     </section>
@@ -375,10 +351,30 @@
     <footer id="footer">
       <div class="footer-left">
         <p>&copy; 2025 Project X. All rights reserved.</p>
-        <p>Crafted with passion in the void.</p>
+        <!-- <p>Crafted with passion in the void.</p> -->
       </div>
       <button class="back-to-top hoverable" id="backToTop">&#8593;</button>
     </footer>
+
+    <!-- Crew profile overlay -->
+    <div id="crew-overlay">
+      <canvas id="crew-canvas"></canvas>
+      <button id="crew-close" class="hoverable" aria-label="Close">✕</button>
+      <div class="crew-content">
+        <div class="crew-photo-wrap">
+          <div class="crew-photo-ring"></div>
+          <div class="crew-photo-ring crew-photo-ring--outer"></div>
+          <img id="crew-photo" src="" alt="" />
+        </div>
+        <div class="crew-details">
+          <span id="crew-role-lbl" class="crew-role-lbl"></span>
+          <h2 id="crew-name-lbl" class="crew-name-lbl"></h2>
+          <p id="crew-bio-lbl" class="crew-bio-lbl"></p>
+          <div id="crew-skills-wrap" class="crew-skills-wrap"></div>
+          <div id="crew-social-wrap" class="crew-social-wrap"></div>
+        </div>
+      </div>
+    </div>
 
     <script type="module" src="/src/main.js"></script>
   </body>
